@@ -26,7 +26,7 @@ import json
 # -- Begin Script Configuration --
 
 HOST = 'https://www.clover.com'
-MERCHANT_ID = 'X3VKHK671W7B4'
+MERCHANT_ID = '3S2JC4YEV2XTE'
 ACCESS_TOKEN = 'cbb13ad3-14b7-f879-7ab3-1a20ee01c2c2'
 
 EXPORT_TYPE = 'ORDERS'        # "ORDERS" or "PAYMENTS"
@@ -72,7 +72,7 @@ def create_export(export_type, start_time, end_time):
         'startTime': start_time,
         'endTime': end_time,
     }
-    print payload
+    # print payload
     resp = requests.get(url)
     # resp = requests.post(url, json=payload)
     resp.raise_for_status()
