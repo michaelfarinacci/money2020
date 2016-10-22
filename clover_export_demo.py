@@ -20,13 +20,14 @@ import requests
 import time
 import sys
 import itertools
+import json
 
 
 # -- Begin Script Configuration --
 
-HOST = 'https://sandbox.dev.clover.com'
-MERCHANT_ID = '3S2JC4YEV2XTE'
-ACCESS_TOKEN = 'd3acaebf-124b-417d-8c94-bc7469968270'
+HOST = 'https://www.clover.com'
+MERCHANT_ID = 'X3VKHK671W7B4'
+ACCESS_TOKEN = 'cbb13ad3-14b7-f879-7ab3-1a20ee01c2c2'
 
 EXPORT_TYPE = 'ORDERS'        # "ORDERS" or "PAYMENTS"
 START_TIME = '1472688000000'  # 09/15/2016 @ 12:00am (UTC)
@@ -40,37 +41,42 @@ SPINNER = itertools.cycle(['|', '/', '-', '\\'])
 
 def main():
     # Request the export
+    resp = requests.get(api_url('/v3/merchants/' + MERCHANT_ID))
+    print resp.json()
+    
     export = create_export(
         export_type=EXPORT_TYPE,
         start_time=START_TIME,
         end_time=END_TIME,
     )
-    print_export(export, 'Requested Export')
+    # print_export(export, 'Requested Export')
 
-    # Wait for the export to finish processing
-    export = wait_for_export(export['id'])
-    print_export(export, 'Finished Export')
+    # # Wait for the export to finish processing
+    # export = wait_for_export(export['id'])
+    # print_export(export, 'Finished Export')
 
-    # Get the URLs for the exported data
-    export_urls = get_export_urls(export['id'])
-    print_export_urls(export_urls)
+    # # Get the URLs for the exported data
+    # export_urls = get_export_urls(export['id'])
+    # print_export_urls(export_urls)
 
-    # Download the data from the export URLs
-    download_exported_data(export_urls)
+    # # Download the data from the export URLs
+    # download_exported_data(export_urls)
 
 
 def create_export(export_type, start_time, end_time):
     """Request a new export"""
-    url = api_url('/v3/merchants/' + MERCHANT_ID + '/exports/')
+    url = api_url('/v3/merchants/' + MERCHANT_ID)
 
     payload = {
         'type': export_type,
         'startTime': start_time,
         'endTime': end_time,
     }
-    resp = requests.post(url, json=payload)
+    print payload
+    resp = requests.get(url)
+    # resp = requests.post(url, json=payload)
     resp.raise_for_status()
-
+    print resp
     return resp.json()
 
 
