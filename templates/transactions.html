@@ -21,5 +21,12 @@
                 </div>
             </div>
         </div><!--/.row-->
+        {% if transactions %}   
+			<ul>
+			{% for transaction in transactions %}
+				<li><strong> {{ transaction }} </strong> </li>
+			{% endfor %}
+			</ul>
+		{% endif %}
     </div>
 {% endblock %}

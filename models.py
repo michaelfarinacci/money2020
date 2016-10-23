@@ -20,7 +20,10 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String())
 
-class Transactions(db.Model):
+    def __init__(self):
+        pass
+
+class Transactions(db.model):
     id = db.Column(db.Integer, primary_key=True)
     order_id = db.Column(db.Integer())
     card_num = db.Column(db.Integer())
@@ -36,3 +39,6 @@ class Transactions(db.Model):
     ammount = db.Column(db.Integer())
     merchant_id = db.Column(db.Integer, ForeignKey('merchants.id'))
     merchant = db.relationship(Merchant)
+
+    def __init__(self):
+        pass
