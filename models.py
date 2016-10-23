@@ -1,17 +1,17 @@
 from flask import Flask
-from flask.ext.sqlalchemy import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import ForeignKey
 
 app = Flask(__name__, static_url_path='/static')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:postgres@52.36.203.109:5432/angel_db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:postgres@localhost/angel_db'
 db = SQLAlchemy(app)
 
 class Merchant(db.Model):
     __tablename__ = 'merchants'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String())
-    location = db.Column(db.Integer, primary_key=True)
+    location = db.Column(db.Integer())
     category = db.Column(db.String())
 
     def __init__(self, name):
@@ -31,7 +31,7 @@ class Transactions(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     order_id = db.Column(db.Integer())
     card_num = db.Column(db.Integer())
-    date = db.Column(db.DATETIME())
+    date = db.Column(db.String())
     total = db.Column(db.Integer())
     cashback_amount = db.Column(db.Integer())
     customer_since = db.Column(db.String())
@@ -41,8 +41,8 @@ class Transactions(db.Model):
     transaction_created_on = db.Column(db.Integer())
     tip_amount = db.Column(db.Integer())
     amount = db.Column(db.Integer())
-#    merchant_id = db.Column(db.Integer, ForeignKey('merchants.id'))
-#    merchant = db.relationship(Merchant)
+    merchant_id = db.Column(db.Integer, db.ForeignKey('merchants.id'))
+    merchant = db.relationship(Merchant)
 
     def __init__(self):
         pass
