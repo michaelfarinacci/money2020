@@ -3,11 +3,9 @@ from flask_migrate import Migrate, MigrateCommand
 from flask_sqlalchemy import SQLAlchemy
 
 from app import app
+from app import db
+import models
 
-db = SQLAlchemy(app)
-
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:postgres@localhost/angel_db'
 
 migrate = Migrate(app, db)
 manager = Manager(app)
