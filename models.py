@@ -46,3 +46,16 @@ class Transactions(db.Model):
     merchant_id = db.Column(db.Integer, ForeignKey('merchants.id'))
     merchant = db.relationship(Merchant)
 
+    def __init__(self):
+        pass
+
+class HighSpendersPredictions(db.Model):
+    __tablename__ = 'predictions'
+
+    id = db.Column(db.Integer, primary_key=True)
+    customer_id = db.Column(db.Integer)
+    merchant_id = db.Column(db.Integer, ForeignKey('merchants.id'))
+    # Represents how likely a user is to spend more with this merchant
+    # if they get a coupon or reward. Value is between 0.0 and 1.0. The higher the more likely
+    # the user is to spend more with the reward.
+    score = db.Column(db.Float) 
