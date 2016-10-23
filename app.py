@@ -1,7 +1,6 @@
 import flask
 import json
 import os
-from flask.ext.sqlalchemy import SQLAlchemy
 from flask import Flask, Response, jsonify, request
 from sqlalchemy import create_engine, asc, ForeignKey
 from sqlalchemy.orm import sessionmaker
