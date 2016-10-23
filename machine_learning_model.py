@@ -20,8 +20,11 @@ def train_ml_model():
     train_data, test_data, train_target, test_target = train_test_split(features_merged[feature_columns], features_merged['repeater'],
                                                                                           test_size=0.2,
                                                                                           random_state=1)
+    train_data['amount_sum'] = train_data.groupby(['id'])['purchaseamount'].sum()
+    train_data['amount_median'] = train_data.groupby(['id'])['purchaseamount'].median()
+    train_data['amount_max'] = train_data.groupby(['id'])['purchaseamount'].max()
+    train_data['amount_min'] = train_data.groupby(['id'])['purchaseamount'].min()
 
-# amount_sum = feature_set.groupby(['id'])['amount'].sum()
 # amount_median = feature_set.groupby(['id'])['amount'].median()
 # amount_max = feature_set.groupby(['id'])['amount'].max()
 # amount_min = feature_set.groupby(['id'])['amount'].max()
@@ -43,13 +46,21 @@ def train_ml_model():
     print "Created the model"
     # train_data = train_data['id', 'chain', 'purchaseamount']
     print "Training the model..."
+    train_data.fillna(0, inplace=True)
     forest = forest.fit(train_data, train_target)
     print "Trained the model"
+
+    test_data['amount_sum'] = test_data.groupby(['id'])['purchaseamount'].sum()
+    test_data['amount_median'] = test_data.groupby(['id'])['purchaseamount'].median()
+    test_data['amount_max'] = test_data.groupby(['id'])['purchaseamount'].max()
+    test_data['amount_min'] = test_data.groupby(['id'])['purchaseamount'].min()
+    test_data.fillna(0, inplace=True)
 
     # Make predictions on test data
     predicted = forest.predict(test_data)
     print metrics.classification_report(test_target, predicted, labels=['t', 'f'], target_names=['likely_to_purchase', 'unlikely_to_purchase'])
-
+    predicted_proba = forest.predict_proba(test_data)
+    print predicted_proba
 
 
 def predict_repeating_customers(customer_info, ml_model):
