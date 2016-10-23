@@ -4,7 +4,7 @@ from sqlalchemy import ForeignKey
 
 app = Flask(__name__, static_url_path='/static')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:postgres@localhost/angel_db_3'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:postgres@52.36.203.109:5432/angel_db_3'
 db = SQLAlchemy(app)
 
 class Merchant(db.Model):
