@@ -25,24 +25,20 @@ def train_ml_model():
     train_data['amount_max'] = train_data.groupby(['id'])['purchaseamount'].max()
     train_data['amount_min'] = train_data.groupby(['id'])['purchaseamount'].min()
 
-# amount_median = feature_set.groupby(['id'])['amount'].median()
-# amount_max = feature_set.groupby(['id'])['amount'].max()
-# amount_min = feature_set.groupby(['id'])['amount'].max()
-
-	# params = {
- #        'n_estimators': 1500,
- #        'bootstrap': True,
- #        'min_samples_leaf': 1,
- #        'max_features': "sqrt",
- #        'criterion': "gini",
- #        'min_samples_split': 3,
- #        'max_depth': 10,
- #        'class_weight': "auto"
- #    }
+    params = {
+        'n_estimators': 100,
+        # 'bootstrap': True,
+        # 'min_samples_leaf': 1,
+        # 'max_features': "sqrt",
+        # 'criterion': "gini",
+        'min_samples_split': 3,
+        'max_depth': 5,
+        'class_weight': "auto"
+    }
 
     # Create and train the model
     print "Creating the model..."
-    forest = RandomForestClassifier(n_estimators=100, max_depth=3)
+    forest = RandomForestClassifier(**params)
     print "Created the model"
     # train_data = train_data['id', 'chain', 'purchaseamount']
     print "Training the model..."
