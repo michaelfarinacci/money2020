@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+	<div class="col-sm-12 col-lg-12 main">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Latest Transactions</div>
+                    <div class="panel-body">
+                        <table data-toggle="table" data-url="tables/data2.json" >
+                            <thead>
+                            <tr>
+                                <th data-field="id">ID</th>
+                                <th data-field="name">Customer</th>
+                                <th data-field="customersince">Customer Since</th>
+                                <th data-field="price">Amount</th>
+                                <th data-field="device">Device</th>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div><!--/.row-->
+    </div>
+{% endblock %}
