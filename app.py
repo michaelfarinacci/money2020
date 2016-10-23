@@ -12,17 +12,23 @@ def resp(data=""):
     data = {'data': data}
     return json.dumps(data)
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def index():
-    #for thread in THREADS.keys():
-    #    if not THREADS[thread].is_alive():
-    #        del THREADS[thread]
-    return flask.render_template('index.html')
+    if request.method == 'POST':
+        number = request.form['number']
+        print(number)
+        return Response(response=number, status=200, mimetype="application/json")
+    else:
+        return flask.render_template('index.html')
 
-@app.route('/test')
-def test():
-    data = resp("This is the loyalty server!")
-    return Response(response=data, status=200, mimetype="application/json")
+@app.route('/transactions', methods=['GET', 'POST'])
+def transactions():
+    return flask.render_template('transactions.html')
+
+#@app.route('/test')
+#def test():
+#    data = resp("This is the loyalty server!")
+#    return Response(response=data, status=200, mimetype="application/json")
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
