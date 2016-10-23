@@ -358,6 +358,8 @@ def get_demo_purchase_info(merchant_id):
 
 
 		transaction_info = {
+            'merchant_id': merchant_id,
+            'order_id': most_recent_order_id,
 			'first_name': customer['firstName'],
 			'last_name': customer['lastName'],
 			'customer_since': customer['customerSince'],
@@ -372,7 +374,8 @@ def get_demo_purchase_info(merchant_id):
 
 if __name__ == '__main__':
 	transactin_info = get_demo_purchase_info(MERCHANT_ID)
+    if transactin_info
 	print transactin_info
 
 
-    
+
