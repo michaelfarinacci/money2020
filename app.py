@@ -3,6 +3,10 @@ import json
 import os
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask import Flask, Response, jsonify, request
+#from OpenSSL import SSL
+#context = SSL.Context(SSL.SSLv23_METHOD)
+#context.use_privatekey_file('server.key')
+#context.use_certificate_file('server.crt')
 
 app = Flask(__name__, static_url_path='/static')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -33,4 +37,6 @@ def transactions():
 #    return Response(response=data, status=200, mimetype="application/json")
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0')
+    #context = ('server.crt', 'server.key')
+    #app.run(host='127.0.0.1', ssl_context=context, threaded=True, debug=True)
+    app.run(debug=True, host='127.0.0.1')#, ssl_context=context)
