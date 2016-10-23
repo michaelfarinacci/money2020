@@ -7,6 +7,10 @@ class Merchant(db.Model):
     __tablename__ = 'merchants'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String())
+    location = db.Column(db.Integer, primary_key=True)
+    category = db.Column(db.String())
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String())
 
     def __init__(self, name):
         self.name = name
@@ -22,3 +26,5 @@ class Transactions(db.model):
     date = db.Column(db.DATETIME())
     total = db.Column(db.Integer())
     merchant = db.Column(db.DATETIME())
+    merchant_id = db.Column(db.Integer, ForeignKey('merchants.id'))
+    merchant = db.relationship(Merchant)

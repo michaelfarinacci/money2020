@@ -20,16 +20,15 @@ def resp(data=""):
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    if request.method == 'POST':
-        number = request.form['number']
-        print(number)
-        return Response(response=number, status=200, mimetype="application/json")
-    else:
-        return flask.render_template('index.html')
+    return flask.render_template('index.html')
 
 @app.route('/transactions', methods=['GET', 'POST'])
 def transactions():
     return flask.render_template('transactions.html')
+
+@app.route('/trends', methods=['GET', 'POST'])
+def trends():
+    return flask.render_template('trends.html')
 
 #@app.route('/test')
 #def test():
