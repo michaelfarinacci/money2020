@@ -37,6 +37,15 @@
             </div>             
         </div><!-- /.container-fluid -->
     </nav>
+    <div id=loader>
+        <div class="spinner">
+            <div class="rect1"></div>
+            <div class="rect2"></div>
+            <div class="rect3"></div>
+            <div class="rect4"></div>
+            <div class="rect5"></div>
+        </div>
+    </div>
     {% block content %}
     {% endblock %}
     <script src="../static/jquery-1.11.1.min.js"></script>
@@ -103,22 +112,47 @@
 function initialize() 
 {
      
-    var myOptions = {center: new google.maps.LatLng(38.4686, -123.0028),
-         zoom: 12,
+    var myOptions = {center: new google.maps.LatLng(37.3350562416977, -121.889604939995),
+         zoom: 16,
           mapTypeId: google.maps.MapTypeId.ROADMAP
     };
     var map = new google.maps.Map(document.getElementById("map_canvas"),myOptions);
-     
-    var lat = 38.4686;
-    var long = -123.0028;
+    var coordinates = [[37.3350562416977, -121.889604939995], [37.3354229, -121.8901786], [37.33541, -121.89342], [37.3350126347807, -121.889442006445], [37.3370318639, -121.889120772981], [37.33503, -121.89013]]
+    for (var i = 0; i < coordinates.length; i++) {
+    //var lat = 37.3350562416977;
+    //var long = -121.889604939995;
+        var lat = coordinates[i][0]
+        var long = coordinates[i][1]
             marker = new google.maps.Marker({
                     position: new google.maps.LatLng(lat, long),
                     map: map
                     });
-             
+    } 
 }  
+try{
 initialize()
-console.log("got here")
+} catch (err) {console.log(err)}
+
     </script>   
+    <script type="text/javascript">
+        function loadVersion (resp) {
+            resp = JSON.parse(resp);
+            if (resp && resp.version_id) {
+                var version = jQuery('#version').data('version');
+                if(Number(resp.version_id) !== Number(version)) {
+                    jQuery('#loader').show();
+                    window.setTimeout(function () {
+                            window.location.reload();
+                            }, 2000)
+                    window.clearInterval(cId);
+                }
+            }
+        }
+jQuery(document).ready(function () {
+        cId = window.setInterval(function () {
+            jQuery.get('/version', loadVersion);
+            }, 2000);
+        });
+    </script>
 </body>
 </html>

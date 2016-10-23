@@ -23,19 +23,29 @@ def resp(data=""):
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    return flask.render_template('index.html')
+    version_id =  session.query(Transactions).order_by(Transactions.id.desc()).first().id
+    return flask.render_template('index.html', version_id=version_id)
 
 @app.route('/transactions', methods=['GET', 'POST'])
 def transactions():
     transactions = session.query(Transactions).limit(10)
+    version_id =  session.query(Transactions).order_by(Transactions.id.desc()).first().id
     if transactions:
-        return flask.render_template('transactions.html', transactions = transactions)
+        return flask.render_template('transactions.html', transactions = transactions, version_id = version_id)
     else:
         return flask.render_template('transactions.html')
 
 @app.route('/trends', methods=['GET', 'POST'])
 def trends():
-    return flask.render_template('trends.html')
+    version_id =  session.query(Transactions).order_by(Transactions.id.desc()).first().id
+    return flask.render_template('trends.html', version_id = version_id)
+
+@app.route('/version', methods=['GET'])
+def version():
+    record = session.query(Transactions).order_by(Transactions.id.desc()).first()
+    data = { 'version_id': record.id }
+    return json.dumps(data)
+
 
 @app.route('/consumer', methods=['GET', 'POST'])
 def consumer():

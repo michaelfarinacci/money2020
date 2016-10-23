@@ -354,13 +354,12 @@ def create_item(merchant_id):
   url = api_url('/v3/merchants/' + merchant_id + '/items')
   payload = {
     "unitName": 'oz',
-    "name": "Cosmopolitan"
+    "name": "Cosmopolitan",
     "categories": [
     {
-      "name": 'Alcoholic Beverage',
-      ]
+      "name": 'Alcoholic Beverage'
     }
-  ],
+    ]
   }
   resp = requests.post(url, data=json.dumps(payload))
   json_response = resp.json()
@@ -373,23 +372,24 @@ def get_demo_purchase_info(merchant_id):
 	if order_ids:
 		most_recent_order_id = order_ids[0]
 		order_info = get_order_info(merchant_id, most_recent_order_id)
-		payments = order_info['payments']['elements'][0]
+                if order_info:
+                    payments = order_info['payments']['elements'][0]
 
-		customer = order_info['customers']['elements'][0]
+                    customer = order_info['customers']['elements'][0]
 
-		transaction_info = {
-			'merchant_id': merchant_id,
-			'order_id': most_recent_order_id,
-			'first_name': customer['firstName'],
-			'last_name': customer['lastName'],
-			'customer_since': customer['customerSince'],
-			'amount': payments['amount'],
-			'tax_amount': payments['taxAmount'],
-			'tip_amount': payments['tipAmount'],
-			'transaction_created_on': order_info['createdTime'],
-			'cashback_amount': payments['cashbackAmount']
-		}
-		return transaction_info
+                    transaction_info = {
+                            'merchant_id': merchant_id,
+                            'order_id': most_recent_order_id,
+                            'first_name': customer['firstName'],
+                            'last_name': customer['lastName'],
+                            'customer_since': customer['customerSince'],
+                            'amount': payments['amount'],
+                            'tax_amount': payments['taxAmount'],
+                            'tip_amount': payments['tipAmount'],
+                            'transaction_created_on': order_info['createdTime'],
+                            'cashback_amount': payments['cashbackAmount']
+                    }
+                    return transaction_info
 
 def create_session():
     DBSession = sessionmaker(bind=create_engine('postgresql://postgres:postgres@localhost/angel_db_3'))
@@ -398,6 +398,7 @@ def create_session():
 def order_exists(oid):
     session = create_session()
     record = session.query(Transactions).filter_by(order_id = oid).first()
+    session.close()
 
     return True if record else False
 
@@ -417,6 +418,7 @@ def persist_transaction(transaction_info):
     # transaction model instance
     session.add(item)
     session.commit()
+    session.close()
 
 
 
@@ -429,8 +431,9 @@ if __name__ == '__main__':
                 print("the order exists!!!")
             else:
                 print("writing to database")
-            print(transactin_info)
-            persist_transaction(transactin_info)
+                print(transactin_info)
+                if(transactin_info):
+                    persist_transaction(transactin_info)
             time.sleep(0.1)
     except KeyboardInterrupt:
         print("keyboard interrupt!")
