@@ -42,8 +42,21 @@ class YelpSession():
                   'attrs': 'ActiveDeal',
                   'radius': radius
                  }
+        return self.client.search(**params)
         response = self.client.search(**params).businesses[0]
         return {'datatime': int(time.time()), 'rating': response.rating, 'total_reviews': response.review_count}
+
+    def get_coordinate_list(self, business_name, location, radius=5):
+        params = {'term': business_name,
+                  'location': location,
+                  'lang': 'en',
+                  'attrs': 'ActiveDeal',
+                  'radius': radius
+                 }
+        search = self.client.search(**params)
+        response = {}
+        for business in search.businesses:
+            print business.name, business.location.coordinate.latitude, business.location.coordinate.longitude
 
 if __name__ == '__main__':
     """Sample queries"""
@@ -52,4 +65,6 @@ if __name__ == '__main__':
     print search
     search2 = ys.get_business_info('Original Gravity', 'San Jose, CA')
     print search2
-    #import pdb; pdb.set_trace()
+    search3 = ys.get_coordinate_list('Original Gravity', 'San Jose, CA')
+    print search3
+    import pdb; pdb.set_trace()
