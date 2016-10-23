@@ -4,7 +4,7 @@ from sqlalchemy import ForeignKey
 
 app = Flask(__name__, static_url_path='/static')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:postgres@localhost/angel_db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:postgres@localhost/angel_db_3'
 db = SQLAlchemy(app)
 
 class Merchant(db.Model):
@@ -33,14 +33,14 @@ class Transactions(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     order_id = db.Column(db.Integer())
     card_num = db.Column(db.Integer())
-    date = db.Column(db.String())
+    date = db.Column(db.DateTime())
     total = db.Column(db.Integer())
     cashback_amount = db.Column(db.Integer())
-    customer_since = db.Column(db.String())
+    customer_since = db.Column(db.DateTime())
     first_name = db.Column(db.String())
     last_name = db.Column(db.String())
     tax_amount = db.Column(db.Integer())
-    transaction_created_on = db.Column(db.Integer())
+    transaction_created_on = db.Column(db.DateTime())
     tip_amount = db.Column(db.Integer())
     amount = db.Column(db.Integer())
     merchant_id = db.Column(db.Integer, ForeignKey('merchants.id'))

@@ -9,7 +9,7 @@ from models import app, Merchant, Transactions
 #context = SSL.Context(SSL.SSLv23_METHOD)
 #context.use_privatekey_file('server.key')
 #context.use_certificate_file('server.crt')
-DBSession = sessionmaker(bind=create_engine('postgresql://postgres:postgres@52.36.203.109:5432/angel_db'))
+DBSession = sessionmaker(bind=create_engine('postgresql://postgres:postgres@52.36.203.109:5432/angel_db_3'))
 session = DBSession()
 
 def resp(data=""):
@@ -23,7 +23,7 @@ def index():
 
 @app.route('/transactions', methods=['GET', 'POST'])
 def transactions():
-    transactions = session.query(Transactions).all()
+    transactions = session.query(Transactions).limit(10)
     if transactions:
         return flask.render_template('transactions.html', transactions = transactions)
     else:

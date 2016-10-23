@@ -53,25 +53,32 @@ var randomScalingFactor = function(){ return Math.round(Math.random()*1000)};
 					value: 300,
 					color:"#30a5ff",
 					highlight: "#62b9fb",
-					label: "Blue"
+					label: "Age 18 - 25",
+					legend: {
+						labels: {
+							generateLabels: {
+								function(chart) {}
+							}
+						}
+					}
 				},
 				{
-					value: 50,
+					value: 250,
 					color: "#ffb53e",
 					highlight: "#fac878",
-					label: "Orange"
+					label: "Age 26 - 55"
 				},
 				{
 					value: 100,
 					color: "#1ebfae",
 					highlight: "#3cdfce",
-					label: "Teal"
+					label: "Age 36-55"
 				},
 				{
-					value: 120,
+					value: 30,
 					color: "#f9243f",
 					highlight: "#f6495f",
-					label: "Red"
+					label: "Age 56-100"
 				}
 
 			];
@@ -81,25 +88,25 @@ var randomScalingFactor = function(){ return Math.round(Math.random()*1000)};
 						value: 300,
 						color:"#30a5ff",
 						highlight: "#62b9fb",
-						label: "Blue"
+						label: "Mobile"
 					},
 					{
 						value: 50,
 						color: "#ffb53e",
 						highlight: "#fac878",
-						label: "Orange"
+						label: "Social Media"
 					},
 					{
 						value: 100,
 						color: "#1ebfae",
 						highlight: "#3cdfce",
-						label: "Teal"
+						label: "Web"
 					},
 					{
 						value: 120,
 						color: "#f9243f",
 						highlight: "#f6495f",
-						label: "Red"
+						label: "Retail"
 					}
 	
 				];

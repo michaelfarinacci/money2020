@@ -6,27 +6,30 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">Latest Transactions</div>
                     <div class="panel-body">
-                        <table data-toggle="table" data-url="tables/data2.json" >
+                        <table class="table table-striped">
                             <thead>
                             <tr>
-                                <th data-field="id">ID</th>
-                                <th data-field="name">Customer</th>
-                                <th data-field="customersince">Customer Since</th>
-                                <th data-field="price">Amount</th>
-                                <th data-field="device">Device</th>
+                                <td data-field="id">ID</th>
+                                <td data-field="name">First Name</th>
+                                <td data-field="customersince">Last Name</th>
+                                <td data-field="price">Amount</th>
                             </tr>
                             </thead>
+                            {% if transactions %}   
+                                {% for transaction in transactions %}
+                            <tr>
+                                <td data-field="id" width=20%>{{ transaction.id }}</th>
+                                <td data-field="name" width=20%>{{ transaction.first_name }}</th>
+                                <td data-field="customersince" width=20%>{{ transaction.last_name }}</th>
+                                <td data-field="price" width=20%>${{ transaction.amount }}</th>
+                            </tr>
+                                {% endfor %}
+                            {% endif %}
                         </table>
                     </div>
                 </div>
             </div>
         </div><!--/.row-->
-        {% if transactions %}   
-			<ul>
-			{% for transaction in transactions %}
-				<li><strong> {{ transaction }} </strong> </li>
-			{% endfor %}
-			</ul>
-		{% endif %}
+
     </div>
 {% endblock %}
