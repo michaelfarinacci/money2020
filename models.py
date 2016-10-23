@@ -23,7 +23,7 @@ class User(db.Model):
     name = db.Column(db.String())
     merchant_id = db.Column(db.Integer, ForeignKey('merchants.id'))
     merchant = db.relationship(Merchant)
-    
+
     def __init__(self):
         pass
 

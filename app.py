@@ -9,7 +9,11 @@ from models import app, Merchant, Transactions
 #context = SSL.Context(SSL.SSLv23_METHOD)
 #context.use_privatekey_file('server.key')
 #context.use_certificate_file('server.crt')
-DBSession = sessionmaker(bind=create_engine('postgresql://postgres:postgres@52.36.203.109:5432/angel_db_3'))
+if os.uname()[0] == 'Darwin':
+    ip = '52.36.203.109:5432'
+else:
+    ip = 'localhost'
+DBSession = sessionmaker(bind=create_engine('postgresql://postgres:postgres@%s/angel_db_3' % ip))
 session = DBSession()
 
 def resp(data=""):
@@ -46,4 +50,4 @@ def consumer():
 if __name__ == '__main__':
     #context = ('server.crt', 'server.key')
     #app.run(host='127.0.0.1', ssl_context=context, threaded=True, debug=True)
-    app.run(debug=True, host='127.0.0.1')#, ssl_context=context)
+    app.run(debug=True, host='10.0.0.164')#, ssl_context=context)
