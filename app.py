@@ -1,21 +1,15 @@
 import flask
 import json
 import os
-from flask_sqlalchemy import SQLAlchemy
+from flask.ext.sqlalchemy import SQLAlchemy
 from flask import Flask, Response, jsonify, request
 from sqlalchemy import create_engine, asc, ForeignKey
 from sqlalchemy.orm import sessionmaker
-from models import Transactions
+from models import app, Merchant
 #from OpenSSL import SSL
 #context = SSL.Context(SSL.SSLv23_METHOD)
 #context.use_privatekey_file('server.key')
 #context.use_certificate_file('server.crt')
-
-app = Flask(__name__, static_url_path='/static')
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:postgres@52.36.203.109:5432/angel_db'
-db = SQLAlchemy(app)
-
 DBSession = sessionmaker(bind=create_engine('postgresql://postgres:postgres@52.36.203.109:5432/angel_db'))
 session = DBSession()
 
@@ -30,9 +24,9 @@ def index():
 
 @app.route('/transactions', methods=['GET', 'POST'])
 def transactions():
-    transactions = session.query(Transactions).order_by(asc(Transactions.date))
+    transactions = session.query(Merchant)
     if transactions:
-        return flask.render_template('transactions.html', transactions = transactions)
+        return flask.render_template('transactions.html', transactions = Merchant)
         
 
 @app.route('/trends', methods=['GET', 'POST'])
