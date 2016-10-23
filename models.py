@@ -21,7 +21,9 @@ class User(db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String())
-
+    merchant_id = db.Column(db.Integer, ForeignKey('merchants.id'))
+    merchant = db.relationship(Merchant)
+    
     def __init__(self):
         pass
 
@@ -41,6 +43,6 @@ class Transactions(db.Model):
     transaction_created_on = db.Column(db.String())
     tip_amount = db.Column(db.Integer())
     amount = db.Column(db.Integer())
-    merchant_id = db.Column(db.Integer, db.ForeignKey('merchants.id'))
+    merchant_id = db.Column(db.Integer, ForeignKey('merchants.id'))
     merchant = db.relationship(Merchant)
 

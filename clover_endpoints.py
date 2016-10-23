@@ -350,6 +350,24 @@ def create_payment_on_order(merchant_id, order_id):
 	return json_response
 
 
+def create_item(merchant_id):
+  url = api_url('/v3/merchants/' + merchant_id + '/items')
+  payload = {
+    "unitName": 'oz',
+    "name": "Cosmopolitan"
+    "categories": [
+    {
+      "name": 'Alcoholic Beverage',
+      ]
+    }
+  ],
+  }
+  resp = requests.post(url, data=json.dumps(payload))
+  json_response = resp.json()
+  print json_response
+  return json_response
+
+
 def get_demo_purchase_info(merchant_id):
 	order_ids = get_merchant_order_ids(merchant_id)
 	if order_ids:
@@ -359,10 +377,9 @@ def get_demo_purchase_info(merchant_id):
 
 		customer = order_info['customers']['elements'][0]
 
-
 		transaction_info = {
-            'merchant_id': merchant_id,
-            'order_id': most_recent_order_id,
+			'merchant_id': merchant_id,
+			'order_id': most_recent_order_id,
 			'first_name': customer['firstName'],
 			'last_name': customer['lastName'],
 			'customer_since': customer['customerSince'],
@@ -418,6 +435,3 @@ if __name__ == '__main__':
     except KeyboardInterrupt:
         print("keyboard interrupt!")
         sys.exit(0)
-
-
-
