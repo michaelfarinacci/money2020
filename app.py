@@ -5,7 +5,7 @@ from flask.ext.sqlalchemy import SQLAlchemy
 from flask import Flask, Response, jsonify, request
 from sqlalchemy import create_engine, asc, ForeignKey
 from sqlalchemy.orm import sessionmaker
-from models import app, Merchant
+from models import app, Merchant, Transactions
 #from OpenSSL import SSL
 #context = SSL.Context(SSL.SSLv23_METHOD)
 #context.use_privatekey_file('server.key')
@@ -24,10 +24,11 @@ def index():
 
 @app.route('/transactions', methods=['GET', 'POST'])
 def transactions():
-    transactions = session.query(Merchant)
+    transactions = session.query(Transactions).all()
     if transactions:
-        return flask.render_template('transactions.html', transactions = Merchant)
-        
+        return flask.render_template('transactions.html', transactions = transactions)
+    else:
+        return flask.render_template('transactions.html')
 
 @app.route('/trends', methods=['GET', 'POST'])
 def trends():
