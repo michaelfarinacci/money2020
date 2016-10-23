@@ -12,6 +12,9 @@ from models import app, Merchant, Transactions
 DBSession = sessionmaker(bind=create_engine('postgresql://postgres:postgres@52.36.203.109:5432/angel_db_3'))
 session = DBSession()
 
+from yelp_session import YelpSession
+ys = YelpSession()
+
 def resp(data=""):
     """Create response data json"""
     data = {'data': data}
@@ -37,6 +40,19 @@ def trends():
 def consumer():
     return flask.render_template('consumer.html')
 
+@app.route('/yelpInfo', methods=['GET', 'POST'])
+def get_yelp_info():
+    data = ys.get_business_info('Original Gravity', 'San Jose, CA')
+    return resp(data)
+
+@app.route('/yelpSales', methods=['GET', 'POST'])
+def get_yelp_sales():
+    pass
+
+@app.route('/yelpCoordinates', methods=['GET', 'POST'])
+def get_yelp_coordinates():
+    data = ys.get_coordinate_list('Original Gravity', 'San Jose, CA')
+    return resp(data)
 
 #@app.route('/test')
 #def test():

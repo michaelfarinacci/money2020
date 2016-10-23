@@ -54,9 +54,10 @@ class YelpSession():
                   'radius': radius
                  }
         search = self.client.search(**params)
-        response = {}
+        response = []
         for business in search.businesses:
-            print business.name, business.location.coordinate.latitude, business.location.coordinate.longitude
+            response.append(latitbusiness.location.coordinate.latitude, business.location.coordinate.longitude])
+        return response
 
 if __name__ == '__main__':
     """Sample queries"""
@@ -67,4 +68,4 @@ if __name__ == '__main__':
     print search2
     search3 = ys.get_coordinate_list('Original Gravity', 'San Jose, CA')
     print search3
-    import pdb; pdb.set_trace()
+    #import pdb; pdb.set_trace()
