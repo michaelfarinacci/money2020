@@ -31,7 +31,7 @@ class Transactions(db.Model):
     __tablename__ = 'transactions'
 
     id = db.Column(db.Integer, primary_key=True)
-    order_id = db.Column(db.Integer())
+    order_id = db.Column(db.String())
     card_num = db.Column(db.Integer())
     date = db.Column(db.DateTime())
     total = db.Column(db.Integer())
@@ -40,11 +40,9 @@ class Transactions(db.Model):
     first_name = db.Column(db.String())
     last_name = db.Column(db.String())
     tax_amount = db.Column(db.Integer())
-    transaction_created_on = db.Column(db.DateTime())
+    transaction_created_on = db.Column(db.String())
     tip_amount = db.Column(db.Integer())
     amount = db.Column(db.Integer())
     merchant_id = db.Column(db.Integer, ForeignKey('merchants.id'))
     merchant = db.relationship(Merchant)
 
-    def __init__(self):
-        pass
