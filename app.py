@@ -33,6 +33,11 @@ def transactions():
 def trends():
     return flask.render_template('trends.html')
 
+@app.route('/consumer', methods=['GET', 'POST'])
+def consumer():
+    return flask.render_template('consumer.html')
+
+
 #@app.route('/test')
 #def test():
 #    data = resp("This is the loyalty server!")

@@ -11,7 +11,7 @@ class Merchant(db.Model):
     __tablename__ = 'merchants'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String())
-    location = db.Column(db.Integer, primary_key=True)
+    location = db.Column(db.Integer)
     category = db.Column(db.String())
 
     def __init__(self, name):
