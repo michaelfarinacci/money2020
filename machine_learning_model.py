@@ -3,6 +3,8 @@ import pandas as pd
 from sklearn.cross_validation import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 import numpy as np
+from sklearn import metrics
+
 
 
 def train_ml_model():
@@ -44,13 +46,17 @@ def train_ml_model():
     forest = forest.fit(train_data, train_target)
     print "Trained the model"
 
-#     # Make predictions on test data
-    # predicted = forest.predict(test_features)
+    # Make predictions on test data
+    predicted = forest.predict(test_data)
+    print metrics.classification_report(test_target, predicted, labels=['t', 'f'], target_names=['likely_to_purchase', 'unlikely_to_purchase'])
+
 
 
 def predict_repeating_customers(customer_info, ml_model):
-	predictions = ml_model.predict(customer_info)
-
+	customer_features = customer_info['id', 'chain', 'purchaseamount', 'purchasequantity']
+	# Returns a pandas data frame with customer_id, chain_id and score
+	predictions = ml_model.predict(customer_features)
+	return predictions
 	# TODO: Save predictions in the db...
 
 
