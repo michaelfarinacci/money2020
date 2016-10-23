@@ -3,6 +3,9 @@ import time
 import sys
 import itertools
 import json
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy import create_engine
+from models import *
 
 
 # Dev credentials:
@@ -371,11 +374,50 @@ def get_demo_purchase_info(merchant_id):
 		}
 		return transaction_info
 
+def create_session():
+    DBSession = sessionmaker(bind=create_engine('postgresql://postgres:postgres@localhost/angel_db_3'))
+    return DBSession()
+
+def order_exists(oid):
+    session = create_session()
+    record = session.query(Transactions).filter_by(order_id = oid).first()
+
+    return True if record else False
+
+def persist_transaction(transaction_info):
+    session = create_session()
+    item = Transactions(
+            order_id = transaction_info['order_id'],
+            cashback_amount= transaction_info['cashback_amount'],
+            customer_since = transaction_info['customer_since'],
+            first_name=transaction_info['first_name'],
+            last_name=transaction_info['last_name'],
+            tax_amount=transaction_info['tax_amount'],
+            transaction_created_on=transaction_info['transaction_created_on'],
+            tip_amount=transaction_info['tip_amount'],
+            amount=transaction_info['amount'])
+
+    # transaction model instance
+    session.add(item)
+    session.commit()
+
+
 
 if __name__ == '__main__':
-	transactin_info = get_demo_purchase_info(MERCHANT_ID)
-    if transactin_info
-	print transactin_info
+    try:
+        while True:
+            transactin_info = get_demo_purchase_info(MERCHANT_ID)
+            oid = transactin_info['order_id']
+            if order_exists(oid):
+                print("the order exists!!!")
+            else:
+                print("writing to database")
+            print(transactin_info)
+            persist_transaction(transactin_info)
+            time.sleep(0.1)
+    except KeyboardInterrupt:
+        print("keyboard interrupt!")
+        sys.exit(0)
 
 
 
