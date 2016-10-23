@@ -347,6 +347,24 @@ def create_payment_on_order(merchant_id, order_id):
 	return json_response
 
 
+def create_item(merchant_id):
+  url = api_url('/v3/merchants/' + merchant_id + '/items')
+  payload = {
+    "unitName": 'oz',
+    "name": "Cosmopolitan"
+    "categories": [
+    {
+      "name": 'Alcoholic Beverage',
+      ]
+    }
+  ],
+  }
+  resp = requests.post(url, data=json.dumps(payload))
+  json_response = resp.json()
+  print json_response
+  return json_response
+
+
 def get_demo_purchase_info(merchant_id):
 	order_ids = get_merchant_order_ids(merchant_id)
 	if order_ids:
@@ -372,6 +390,7 @@ def get_demo_purchase_info(merchant_id):
 
 
 if __name__ == '__main__':
+  create_item(MERCHANT_ID)
 	transaction_info = get_demo_purchase_info(MERCHANT_ID)
 	print transaction_info
 
