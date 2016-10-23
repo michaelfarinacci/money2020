@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
+
 <div class="col-sm-12 col-lg-12 main">
 <div class="row">
     <div class="col-lg-12">
@@ -10,45 +11,15 @@
                     <canvas class="main-chart" id="line-chart" height="200" width="600"></canvas>
                 </div>
             </div>
-            </div>
         </div>
+    </div>
+    <div class="col-lg-12">
         <div class="panel panel-default">
             <div class="panel-heading">Nearby Similar Businesses</div>
             <div class="panel-body">
                 <div class="canvas-wrapper">
-                    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-                    <style type="text/css">
-                    html { height: 100% }
-                    body { height: 100%; margin: 0; padding: 0 }
-                    #map_canvas { height: 100% }
-                    </style>
- 
-                    <script type="text/javascript"
-                    src="http://maps.googleapis.com/maps/api/js?key=(YOUR_OWN_KEY)&sensor=false">
-                    </script>
- 
-                    <script type="text/javascript">
- 
-                    function initialize() 
-                    {
- 
-                    var myOptions = {center: new google.maps.LatLng(38.4686, -123.0028),
-                    zoom: 12,
-                    mapTypeId: google.maps.MapTypeId.ROADMAP
-                    };
-                    var map = new google.maps.Map(document.getElementById("map_canvas"),myOptions);
- 
-                    var lat = 38.4686;		
-                    var long = -123.0028;
-                    marker = new google.maps.Marker({
-                    position: new google.maps.LatLng(lat, long),
-                    map: map
-                    });
- 
-                    }	  
-                    </script>
+                    <div id="map_canvas" style="width:60%; height:60%">TEST</div>
                 </div>
-            </div>
             </div>
         </div>
     </div>

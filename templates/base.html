@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
+<style>
+#map_canvas { height: 100% }
+</style>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Latest compiled and minified CSS -->
@@ -8,6 +11,7 @@
 
     <!--Icons-->
     <script src="../static/lumino.glyphs.js"></script>
+
 </head>
 <body>
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -38,7 +42,7 @@
     <script src="../static/jquery-1.11.1.min.js"></script>
 	<script src="../static/bootstrap.min.js"></script>
 	<script src="../static/chart.min.js"></script>
-	<script src="../static/chart-data.js"></script>
+    <script src="../static/chart-data.js"></script>
 	<script src="../static/easypiechart.js"></script>
 	<script src="../static/easypiechart-data.js"></script>
 	<script src="../static/bootstrap-datepicker.js"></script>
@@ -90,5 +94,31 @@
         }
         
 	</script>	
+    <script type="text/javascript"
+    src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAEOBT0dXiMh1C7GxowrvbZiJpEk_RDEGU&sensor=false">
+    </script>
+     
+    <script type="text/javascript">
+ 
+function initialize() 
+{
+     
+    var myOptions = {center: new google.maps.LatLng(38.4686, -123.0028),
+         zoom: 12,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    var map = new google.maps.Map(document.getElementById("map_canvas"),myOptions);
+     
+    var lat = 38.4686;
+    var long = -123.0028;
+            marker = new google.maps.Marker({
+                    position: new google.maps.LatLng(lat, long),
+                    map: map
+                    });
+             
+}  
+initialize()
+console.log("got here")
+    </script>   
 </body>
 </html>
